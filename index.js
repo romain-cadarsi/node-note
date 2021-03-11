@@ -19,8 +19,9 @@ const PORT = process.env.PORT || 5000 // this is very important
 const articleRepository = require('./articleRepository.js')
 const accountRepository = require('./accountRepository.js')
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    if(users.find((user) => user.email === jwt_payload.user)){
+passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
+    let users = await accountRepository.findAll()
+    if(users.data.find((user) => user.email === jwt_payload.user)){
         return done(null, jwt_payload.user);
     }
     else{
@@ -39,7 +40,6 @@ app.post('/login', urlEncodedParser, async function (req, res) {
     }
 
     let users = await accountRepository.findAll()
-    console.log(users);
     const user = users.data.find(
         (user) => user.email === email && user.password === password
     )
