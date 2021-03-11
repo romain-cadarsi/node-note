@@ -14,6 +14,8 @@ opts.secretOrKey = secret;
 const app = express()
 app.use(cors());
 
+const PORT = process.env.PORT || 5000 // this is very important
+
 const articleRepository = require('./articleRepository.js')
 const accountRepository = require('./accountRepository.js')
 
@@ -136,6 +138,6 @@ app.get('/article/:articleId', async function(req, res) {
 })
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('running')
 })
