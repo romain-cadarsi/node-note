@@ -35,7 +35,7 @@ function updateById(id,data){
 
 async function isCreator(id,user){
     const article = await findById(id);
-    return article.user === user;
+    return article.data.user === user;
 }
 module.exports = {
     findById: findById,
